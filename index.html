@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJ ZHULFY | Energic Mix Selector & Performer</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['"Bebas Neue"', 'sans-serif'],
+                        subhead: ['"Barlow Condensed"', 'sans-serif'],
+                        body: ['Barlow', 'sans-serif'],
+                    },
+                    colors: {
+                        Z: {
+                            blue: '#00d4ff',
+                            orange: '#ff6a00',
+                            dark: '#060608',
+                            card: '#0d0d12',
+                            border: '#1a1a24',
+                        }
+                    },
+                    animation: {
+                        'spin-slow': 'spin 8s linear infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                        'bar1': 'bar 1.2s ease-in-out infinite',
+                        'bar2': 'bar 1.2s ease-in-out 0.2s infinite',
+                        'bar3': 'bar 1.2s ease-in-out 0.4s infinite',
+                        'bar4': 'bar 1.2s ease-in-out 0.6s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-16px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.6' },
+                            '50%': { opacity: '1' },
+                        },
+                        bar: {
+                            '0%, 100%': { transform: 'scaleY(0.4)' },
+                            '50%': { transform: 'scaleY(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: #060608;
+            color: #fff;
+            font-family: 'Barlow', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #060608; }
+        ::-webkit-scrollbar-thumb { background: #00d4ff40; border-radius: 99px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00d4ff; }
+
+        /* ── SELECTION ── */
+        ::selection { background: #00d4ff30; color: #00d4ff; }
+
+        /* ── NOISE TEXTURE ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+            background-size: 256px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ── GRADIENT MESH ── */
+        .mesh-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 20% 20%, #00d4ff12 0%, transparent 60%),
+                radial-gradient(ellipse 50% 40% at 80% 80%, #ff6a0010 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        /* ── NAVBAR ── */
+        .glass-nav {
+            background: rgba(6, 6, 8, 0.6);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        /* ── NEON TEXT ── */
+        .neon-blue { color: #00d4ff; }
+        .neon-orange { color: #ff6a00; }
+        .text-glow { text-shadow: 0 0 30px rgba(0,212,255,0.5); }
+
+        /* ── GRADIENT TEXT ── */
+        .grad-text {
+            background: linear-gradient(135deg, #00d4ff 0%, #ffffff 45%, #ff6a00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── BUTTONS ── */
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff, #0099cc);
+            color: #000;
+            font-weight: 700;
+            padding: 14px 32px;
+            border-radius: 99px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 30px rgba(0,212,255,0.25), 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .btn-primary:hover::before { opacity: 1; }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 50px rgba(0,212,255,0.4), 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .btn-ghost {
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.8);
+            font-weight: 600;
+            padding: 13px 32px;
+            border-radius: 99px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.03);
+        }
+        .btn-ghost:hover {
+            border-color: #00d4ff;
+            color: #00d4ff;
+            background: rgba(0,212,255,0.05);
+            transform: translateY(-2px);
+        }
+
+        /* ── CARDS ── */
+        .card {
+            background: #0d0d12;
+            border: 1px solid #1a1a24;
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,212,255,0.04) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .card:hover::before { opacity: 1; }
+        .card:hover {
+            border-color: rgba(0,212,255,0.3);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(0,212,255,0.08);
+        }
+
+        /* ── SECTION LABELS ── */
+        .section-label {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: #00d4ff;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .section-label::before {
+            content: '';
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: #00d4ff;
+        }
+
+        /* Bebas Neue for all display headings */
+        .font-display {
+            font-family: 'Bebas Neue', sans-serif !important;
+            letter-spacing: 0.04em;
+        }
+
+        /* Barlow Condensed for nav, badges, labels, stats */
+        .font-subhead,
+        .nav-link,
+        .stat-card p,
+        .playing-badge,
+        .genre-tag,
+        .tech-chip span,
+        .btn-primary,
+        .btn-ghost,
+        .btn-wa {
+            font-family: 'Barlow Condensed', sans-serif;
+        }
+
+        .nav-link {
+            letter-spacing: 0.06em;
+            font-weight: 600;
+        }
+
+        /* Barlow Condensed for all card-level headings */
+        .card h3, .card h4, .card h5,
+        .timeline-item h4,
+        .tech-chip h5 {
+            font-family: 'Barlow Condensed', sans-serif !important;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+        }
+
+        /* Tighten hero size slightly for Bebas */
+        @media (max-width: 480px) {
+            h1 { font-size: 72px !important; }
+        }
+
+        /* ── EQUALIZER BARS ── */
+        .eq-bar {
+            width: 3px;
+            border-radius: 2px;
+            background: linear-gradient(to top, #00d4ff, #ff6a00);
+            transform-origin: bottom;
+        }
+
+        /* ── HERO BG IMAGE ── */
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background: url('asset/img/16.png') center top / cover no-repeat;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to right, rgba(6,6,8,0.95) 30%, rgba(6,6,8,0.5) 65%, rgba(6,6,8,0.2) 100%),
+                linear-gradient(to top, #060608 0%, transparent 50%);
+        }
+
+        /* ── TIMELINE ── */
+        .timeline-item { position: relative; padding-left: 40px; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 24px;
+            bottom: -32px;
+            width: 1px;
+            background: linear-gradient(to bottom, rgba(0,212,255,0.5), transparent);
+        }
+        .timeline-item:last-child::before { display: none; }
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 16px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid #00d4ff;
+            background: #060608;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px rgba(0,212,255,0.4);
+        }
+
+        /* ── SERVICE CARD IMAGE ── */
+        .service-img-wrap {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+        .service-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .service-img-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, #0d0d12 0%, transparent 60%);
+        }
+        .card:hover .service-img-wrap img { transform: scale(1.08); }
+
+        /* ── MOBILE MENU ── */
+        #mobile-menu {
+            background: rgba(6,6,8,0.98);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid #1a1a24;
+        }
+
+        /* ── STAT CARD ── */
+        .stat-card {
+            background: linear-gradient(135deg, rgba(0,212,255,0.06) 0%, rgba(0,212,255,0.02) 100%);
+            border: 1px solid rgba(0,212,255,0.15);
+            border-radius: 20px;
+            padding: 28px 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            border-color: rgba(0,212,255,0.4);
+            background: linear-gradient(135deg, rgba(0,212,255,0.1) 0%, rgba(0,212,255,0.04) 100%);
+        }
+
+        /* ── TECH CHIP ── */
+        .tech-chip {
+            background: #0d0d12;
+            border: 1px solid #1a1a24;
+            border-radius: 12px;
+            padding: 16px 20px;
+            transition: all 0.3s ease;
+        }
+        .tech-chip:hover {
+            border-color: rgba(0,212,255,0.3);
+            background: rgba(0,212,255,0.04);
+        }
+
+        /* ── CONTACT CARD ── */
+        .contact-photo {
+            position: relative;
+            border-radius: 28px;
+            overflow: hidden;
+        }
+        .contact-photo::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #00d4ff, #ff6a00, #00d4ff);
+            border-radius: 30px;
+            z-index: -1;
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+
+        /* ── WA BUTTON ── */
+        .btn-wa {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #fff;
+            font-weight: 700;
+            padding: 16px 36px;
+            border-radius: 99px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 17px;
+            box-shadow: 0 0 30px rgba(37,211,102,0.3);
+        }
+        .btn-wa:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(37,211,102,0.5);
+        }
+
+        /* ── FOOTER ── */
+        .footer-logo-glow {
+            filter: drop-shadow(0 0 20px rgba(0,212,255,0.35));
+            transition: filter 0.3s;
+        }
+        .footer-logo-glow:hover {
+            filter: drop-shadow(0 0 35px rgba(0,212,255,0.6));
+        }
+
+        /* ── SOCIAL BTN ── */
+        .social-btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            background: #0d0d12;
+            border: 1px solid #1a1a24;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.5);
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+        .social-btn:hover {
+            color: #fff;
+            border-color: #00d4ff;
+            background: rgba(0,212,255,0.1);
+            box-shadow: 0 0 20px rgba(0,212,255,0.2);
+            transform: translateY(-3px);
+        }
+
+        /* ── GENRE TAG ── */
+        .genre-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 99px;
+            border: 1px solid rgba(0,212,255,0.2);
+            background: rgba(0,212,255,0.04);
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.8);
+            transition: all 0.3s ease;
+        }
+        .genre-tag:hover {
+            border-color: #00d4ff;
+            color: #00d4ff;
+            background: rgba(0,212,255,0.08);
+        }
+
+        /* ── PLAYING BADGE ── */
+        .playing-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 99px;
+            background: rgba(0,212,255,0.1);
+            border: 1px solid rgba(0,212,255,0.25);
+            font-size: 12px;
+            color: #00d4ff;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+
+        /* ── RESPONSIVE HERO ── */
+        @media (max-width: 768px) {
+            .hero-bg { background-position: 70% top; }
+            .hero-overlay {
+                background:
+                    linear-gradient(to bottom, rgba(6,6,8,0.5) 0%, rgba(6,6,8,0.85) 60%, #060608 100%),
+                    linear-gradient(to right, rgba(6,6,8,0.5), rgba(6,6,8,0.1));
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ━━━━━━━━━━━━━━ NAVBAR ━━━━━━━━━━━━━━ -->
+<nav class="fixed w-full z-50 glass-nav transition-all duration-500" id="navbar">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="flex items-center justify-between h-18 py-4">
+
+            <a href="#home" class="flex-shrink-2">
+                <img src="asset/img/logo.png" alt="DJ Zhulfy"
+                     class="h-10 md:h-11 w-auto object-contain transition-all duration-300 hover:drop-shadow-[0_0_16px_rgba(0,212,255,0.7)]">
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center gap-1">
+                <a href="#home" class="nav-link px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5">Home</a>
+                <a href="#about" class="nav-link px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5">Tentang</a>
+                <a href="#music" class="nav-link px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5">Musik</a>
+                <a href="#experience" class="nav-link px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5">Pengalaman</a>
+                <a href="#services" class="nav-link px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5">Layanan</a>
+                <a href="#contact" class="btn-primary ml-4 text-sm !py-2.5 !px-6">
+                    <i class="fa-brands fa-whatsapp"></i> Booking
+                </a>
+            </div>
+
+            <!-- Mobile Toggle -->
+            <button id="mobile-menu-btn" class="md:hidden w-10 h-10 flex items-center justify-center rounded-xl border border-Z-border text-gray-300 hover:text-white transition-colors" aria-label="Menu">
+                <i class="fa-solid fa-bars text-lg" id="menu-icon"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden absolute w-full top-full z-40">
+        <div class="px-5 pt-4 pb-6 space-y-1">
+            <a href="#home" class="mobile-link block px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Home</a>
+            <a href="#about" class="mobile-link block px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Tentang</a>
+            <a href="#music" class="mobile-link block px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Musik</a>
+            <a href="#experience" class="mobile-link block px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Pengalaman</a>
+            <a href="#services" class="mobile-link block px-4 py-3 rounded-xl text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Layanan</a>
+            <div class="pt-2">
+                <a href="#contact" class="mobile-link btn-primary w-full justify-center">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Booking Sekarang
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<!-- ━━━━━━━━━━━━━━ HERO ━━━━━━━━━━━━━━ -->
+<section id="home" class="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="mesh-bg"></div>
+
+    <div class="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 py-20 md:py-32">
+        <div class="max-w-2xl">
+            <!-- Playing badge -->
+            <div data-aos="fade-down" class="playing-badge mb-6 w-fit">
+                <div class="flex items-end gap-0.5 h-4">
+                    <div class="eq-bar h-2 animate-bar1"></div>
+                    <div class="eq-bar h-3 animate-bar2"></div>
+                    <div class="eq-bar h-4 animate-bar3"></div>
+                    <div class="eq-bar h-2.5 animate-bar4"></div>
+                </div>
+                Profesional DJ · Gorontalo
+            </div>
+
+            <h1 data-aos="fade-up" data-aos-delay="80" class="font-display font-extrabold leading-[0.9] mb-6 tracking-tight"
+                style="font-size: clamp(80px, 15vw, 160px);">
+                <span class="grad-text text-glow">ZHULFY</span>
+            </h1>
+
+            <p data-aos="fade-up" data-aos-delay="160" class="text-gray-400 text-lg md:text-xl leading-relaxed mb-10 max-w-xl">
+                Energic Mix Selector. Menyambungkan energi dari setiap track langsung ke jiwa pendengar di lantai dansa — dari Jogja ke Gorontalo.
+            </p>
+
+            <div data-aos="fade-up" data-aos-delay="240" class="flex flex-wrap gap-4">
+                <a href="#contact" class="btn-primary text-base">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Hubungi Sekarang
+                </a>
+                <a href="#about" class="btn-ghost text-base">
+                    Lihat Profil <i class="fa-solid fa-arrow-down text-sm"></i>
+                </a>
+            </div>
+
+            <!-- Genre tags -->
+            <div data-aos="fade-up" data-aos-delay="320" class="flex flex-wrap gap-2 mt-10">
+                <span class="genre-tag"><i class="fa-solid fa-music text-xs neon-blue"></i> RNB</span>
+                <span class="genre-tag"><i class="fa-solid fa-music text-xs neon-blue"></i> Afrobeat</span>
+                <span class="genre-tag"><i class="fa-solid fa-music text-xs neon-blue"></i> Breakbeat</span>
+                <span class="genre-tag"><i class="fa-solid fa-music text-xs neon-blue"></i> Indo Bounce</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 animate-bounce">
+        <span class="text-xs text-gray-600 tracking-widest uppercase font-display">Scroll</span>
+        <div class="w-px h-10 bg-gradient-to-b from-Z-blue to-transparent"></div>
+    </div>
+</section>
+
+
+<!-- ━━━━━━━━━━━━━━ ABOUT ━━━━━━━━━━━━━━ -->
+<section id="about" class="relative py-28 md:py-36 overflow-hidden">
+    <div class="mesh-bg"></div>
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 xl:gap-24 items-center">
+
+            <!-- Image side -->
+            <div data-aos="fade-right" class="relative flex justify-center lg:justify-start">
+                <!-- Glow behind image -->
+                <div class="absolute bottom-0 left-1/2 lg:left-1/3 -translate-x-1/2 w-72 h-72 rounded-full bg-Z-blue/10 blur-[80px] pointer-events-none"></div>
+
+                <!-- Photo container -->
+                <div class="relative w-full max-w-m mx-auto lg:mx-0">
+                    <img src="asset/img/15.png"
+                         alt="DJ Zhulfy"
+                         class="relative z-10 w-full object-contain animate-float drop-shadow-[0_0_40px_rgba(0,212,255,0.2)]"
+                         style="max-height: 560px;">
+
+                    <!-- Floating home badge -->
+                    <div class="absolute bottom-8 -left-4 md:left-0 z-20 card px-5 py-4 !rounded-2xl !border-Z-border flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-Z-blue/15 text-Z-blue flex-shrink-0">
+                            <i class="fa-solid fa-location-dot text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="font-display font-bold text-white text-lg leading-tight">Gorontalo</p>
+                            <p class="text-xs text-Z-blue font-semibold uppercase tracking-widest">Home Base</p>
+                        </div>
+                    </div>
+
+                    <!-- Year badge -->
+                    <div class="absolute top-8 -right-4 md:right-0 z-20 card px-5 py-4 !rounded-2xl !border-Z-border flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl flex items-center justify-center bg-Z-orange/15 text-Z-orange flex-shrink-0">
+                            <i class="fa-solid fa-compact-disc text-lg animate-spin-slow"></i>
+                        </div>
+                        <div>
+                            <p class="font-display font-bold text-white text-lg leading-tight">Since '25</p>
+                            <p class="text-xs text-Z-orange font-semibold uppercase tracking-widest">Active DJ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content side -->
+            <div data-aos="fade-left">
+                <span class="section-label">Tentang Saya</span>
+                <h2 class="font-display text-5xl md:text-6xl xl:text-7xl font-extrabold mb-8 leading-[1]">
+                    Membawa Semangat <span class="neon-blue">Jogja</span> ke Gorontalo
+                </h2>
+
+                <div class="space-y-5 text-gray-400 text-base md:text-lg leading-relaxed mb-10">
+                    <p>
+                        <span class="text-white font-semibold">Zhulfy</span> memulai perjalanan profesionalnya di skena musik elektronik Yogyakarta pada November 2025. Selama masa studinya, ia mengasah kemampuan dengan tampil di berbagai kafe dan social space, membangun reputasi sebagai DJ yang mampu menyalurkan energi lagu secara langsung kepada pendengar.
+                    </p>
+                    <p>
+                        Setelah menyelesaikan studinya, Zhulfy kini membawa semangat dan pengalaman dari Jogja kembali ke kampung halamannya. Dengan tekad untuk terus berkarya, ia siap meramaikan industri hiburan lokal dengan vibe yang segar dan seleksi musik yang mengikuti tren masa kini.
+                    </p>
+                </div>
+
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-4 mb-10">
+                    <div class="stat-card">
+                        <p class="font-display text-3xl font-extrabold text-white mb-1">6+</p>
+                        <p class="text-xs text-gray-500 font-subhead font-semibold uppercase tracking-wider leading-tight">Bulan Aktif</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="font-display text-3xl font-extrabold text-white mb-1">4</p>
+                        <p class="text-xs text-gray-500 font-subhead font-semibold uppercase tracking-wider leading-tight">Genre Spesialis</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="font-display text-3xl font-extrabold neon-orange mb-1">100%</p>
+                        <p class="text-xs text-gray-500 font-subhead font-semibold uppercase tracking-wider leading-tight">High Energy</p>
+                    </div>
+                </div>
+
+                <a href="#contact" class="btn-primary">
+                    <i class="fa-solid fa-calendar-check"></i> Book a Set
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ━━━━━━━━━━━━━━ MUSIC ━━━━━━━━━━━━━━ -->
+<section id="music" class="relative py-28 md:py-36 overflow-hidden" style="background: #09090f;">
+    <div class="mesh-bg" style="background: radial-gradient(ellipse 50% 50% at 80% 20%, #ff6a0010 0%, transparent 60%), radial-gradient(ellipse 40% 40% at 20% 80%, #00d4ff08 0%, transparent 60%);"></div>
+
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <span class="section-label justify-center">Identitas Musik</span>
+            <h2 class="font-display text-5xl md:text-6xl xl:text-7xl font-extrabold">Intens, Energik, & Dinamis</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- Genre -->
+            <div data-aos="fade-up" data-aos-delay="80" class="card p-8 group">
+                <div class="w-14 h-14 rounded-2xl flex items-center justify-center bg-Z-blue/10 text-Z-blue text-2xl mb-7 transition-all duration-300 group-hover:bg-Z-blue/20">
+                    <i class="fa-solid fa-compact-disc animate-spin-slow"></i>
+                </div>
+                <h3 class="font-display text-2xl font-bold mb-3">Genre Spesialisasi</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-7">Genre-genre yang sedang mendominasi lantai dansa saat ini.</p>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3 text-gray-300">
+                        <span class="w-1.5 h-1.5 rounded-full bg-Z-blue flex-shrink-0"></span>
+                        <span class="font-medium">RNB</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-gray-300">
+                        <span class="w-1.5 h-1.5 rounded-full bg-Z-blue flex-shrink-0"></span>
+                        <span class="font-medium">Afrobeat</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-gray-300">
+                        <span class="w-1.5 h-1.5 rounded-full bg-Z-blue flex-shrink-0"></span>
+                        <span class="font-medium">BKB & Breakbeat</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-gray-300">
+                        <span class="w-1.5 h-1.5 rounded-full bg-Z-blue flex-shrink-0"></span>
+                        <span class="font-medium">Indo Bounce</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Style -->
+            <div data-aos="fade-up" data-aos-delay="160" class="card p-8 group" style="background: linear-gradient(160deg, #0f0f18 0%, #0d0d12 100%);">
+                <div class="w-14 h-14 rounded-2xl flex items-center justify-center bg-purple-500/10 text-purple-400 text-2xl mb-7 transition-all duration-300 group-hover:bg-purple-500/20">
+                    <i class="fa-solid fa-sliders"></i>
+                </div>
+                <h3 class="font-display text-2xl font-bold mb-3">Gaya Bermain</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-7">Menciptakan suasana yang intens dan mengontrol lautan manusia dengan presisi.</p>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                        <i class="fa-solid fa-bolt text-yellow-400 text-sm w-5 text-center flex-shrink-0"></i>
+                        <span class="font-medium text-gray-200 text-sm">High Energy Performance</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                        <i class="fa-solid fa-users text-purple-400 text-sm w-5 text-center flex-shrink-0"></i>
+                        <span class="font-medium text-gray-200 text-sm">Crowd Controller</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.05]">
+                        <i class="fa-solid fa-wave-square text-Z-blue text-sm w-5 text-center flex-shrink-0"></i>
+                        <span class="font-medium text-gray-200 text-sm">Seamless Transitions</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Philosophy -->
+            <div data-aos="fade-up" data-aos-delay="240" class="card p-8 group flex flex-col justify-between">
+                <div>
+                    <div class="w-14 h-14 rounded-2xl flex items-center justify-center bg-Z-orange/10 text-Z-orange text-2xl mb-7 transition-all duration-300 group-hover:bg-Z-orange/20">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <h3 class="font-display text-2xl font-bold mb-3">Filosofi</h3>
+                </div>
+                <div class="mt-6 relative">
+                    <div class="w-8 h-8 rounded-full bg-Z-blue/10 flex items-center justify-center mb-4">
+                        <i class="fa-solid fa-quote-left text-Z-blue text-xs"></i>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed text-lg italic font-light">
+                        "Menyambungkan energi dari setiap track ke jiwa pendengar, memastikan setiap orang merasakan ritme yang dimainkan."
+                    </p>
+                    <div class="mt-6 pt-6 border-t border-Z-border flex items-center gap-3">
+                        <img src="asset/img/logo.png" alt="logo" class="w-8 h-8 object-contain opacity-70">
+                        <div>
+                            <p class="font-display font-bold text-sm text-white">DJ Zhulfy</p>
+                            <p class="text-xs text-gray-500">Energic Mix Selector</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ━━━━━━━━━━━━━━ EXPERIENCE ━━━━━━━━━━━━━━ -->
+<section id="experience" class="relative py-28 md:py-36 overflow-hidden">
+    <div class="mesh-bg"></div>
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 xl:gap-24">
+
+            <!-- Timeline -->
+            <div data-aos="fade-right">
+                <span class="section-label">Jejak Langkah</span>
+                <h2 class="font-display text-5xl md:text-6xl font-extrabold mb-12 leading-tight">
+                    Pengalaman <span class="neon-blue">Performa</span>
+                </h2>
+
+                <div class="space-y-8">
+                    <div class="timeline-item">
+                        <div class="timeline-dot">
+                            <div class="w-2 h-2 rounded-full bg-Z-blue"></div>
+                        </div>
+                        <div class="card p-6 !rounded-2xl">
+                            <span class="text-xs font-bold text-Z-blue uppercase tracking-widest">Nov 2025 — Mar 2026</span>
+                            <h4 class="font-display text-xl font-bold text-white mt-2 mb-1">Yogyakarta</h4>
+                            <p class="text-gray-400 text-sm leading-relaxed">Resident & Guest DJ di beberapa kafe dan social space ternama di Jogja. Membangun jam terbang di kota pelajar dengan skena kompetitif yang ketat.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="border-color: #ff6a00; box-shadow: 0 0 12px rgba(255,106,0,0.4);">
+                            <div class="w-2 h-2 rounded-full bg-Z-orange"></div>
+                        </div>
+                        <div class="card p-6 !rounded-2xl" style="border-color: rgba(255,106,0,0.2);">
+                            <span class="text-xs font-bold neon-orange uppercase tracking-widest">2026 — Sekarang</span>
+                            <h4 class="font-display text-xl font-bold text-white mt-2 mb-1">Gorontalo <span class="text-xs font-medium bg-Z-orange/15 text-Z-orange px-2 py-0.5 rounded-full ml-2">Current</span></h4>
+                            <p class="text-gray-400 text-sm leading-relaxed">Membangun skena lokal dengan membawa pengaruh musik modern dari kota pelajar. Menginspirasi gaya hidup dan hiburan baru di Gorontalo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tech Stack -->
+            <div data-aos="fade-left">
+                <span class="section-label">Tech Stack</span>
+                <h2 class="font-display text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
+                    Kompetensi <span class="neon-blue">Teknis</span>
+                </h2>
+
+                <p class="text-gray-400 mb-8 leading-relaxed">
+                    Adaptif dengan berbagai perangkat keras. Memiliki perangkat pribadi untuk mobilitas tinggi dan mampu mengoperasikan <span class="text-white font-medium">industry standard gear</span>.
+                </p>
+
+                <div class="grid grid-cols-2 gap-3 mb-6">
+                    <div class="tech-chip">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-9 h-9 rounded-xl bg-Z-blue/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-headphones text-Z-blue text-sm"></i>
+                            </div>
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Personal Gear</span>
+                        </div>
+                        <p class="text-white font-semibold text-sm">Numark Mixtrack Platinum FX</p>
+                    </div>
+
+                    <div class="tech-chip">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-9 h-9 rounded-xl bg-Z-blue/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-record-vinyl text-Z-blue text-sm"></i>
+                            </div>
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Experienced On</span>
+                        </div>
+                        <p class="text-white font-semibold text-sm">Pioneer DDJ-400, FLX4, XDJ-RX2</p>
+                    </div>
+
+                    <div class="tech-chip">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-9 h-9 rounded-xl bg-Z-blue/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-laptop text-Z-blue text-sm"></i>
+                            </div>
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Workstation</span>
+                        </div>
+                        <p class="text-white font-semibold text-sm">MacBook</p>
+                    </div>
+
+                    <div class="tech-chip">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-9 h-9 rounded-xl bg-Z-blue/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fa-brands fa-usb text-Z-blue text-sm"></i>
+                            </div>
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Software</span>
+                        </div>
+                        <p class="text-white font-semibold text-sm">Serato DJ Lite / Pro</p>
+                    </div>
+                </div>
+
+                <!-- Special skill highlight -->
+                <div class="p-6 rounded-2xl" style="background: linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(0,212,255,0.02) 100%); border: 1px solid rgba(0,212,255,0.2);">
+                    <div class="flex items-start gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-Z-blue flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-star text-black text-sm"></i>
+                        </div>
+                        <div>
+                            <h5 class="font-display font-bold text-white mb-2">Keahlian Khusus</h5>
+                            <p class="text-sm text-gray-400 leading-relaxed">Penggunaan Paddle FX pada Numark untuk transisi yang kreatif, harmonic mixing, dan crowd reading presisi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ━━━━━━━━━━━━━━ SERVICES ━━━━━━━━━━━━━━ -->
+<section id="services" class="relative py-28 md:py-36 overflow-hidden" style="background: #09090f;">
+    <div class="mesh-bg" style="background: radial-gradient(ellipse 60% 50% at 50% 100%, #00d4ff08 0%, transparent 70%);"></div>
+
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <span class="section-label justify-center">Layanan & Acara</span>
+            <h2 class="font-display text-5xl md:text-6xl xl:text-7xl font-extrabold mb-4">Siap Menghidupkan Acara Anda</h2>
+            <p class="text-gray-500 max-w-xl mx-auto leading-relaxed">Paket hiburan musik premium untuk berbagai kebutuhan event di Gorontalo dan sekitarnya.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+            <div data-aos="fade-up" data-aos-delay="60" class="card group flex flex-col overflow-hidden">
+                <div class="service-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=800&auto=format&fit=crop" alt="Club & Nightlife">
+                </div>
+                <div class="p-6 flex-1 flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-Z-blue/15 text-Z-blue flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-martini-glass-citrus"></i>
+                        </div>
+                        <h4 class="font-display text-lg font-bold">Club & Nightlife</h4>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Set energik memacu adrenalin khusus untuk genre RNB dan Breakbeat.</p>
+                </div>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="120" class="card group flex flex-col overflow-hidden">
+                <div class="service-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=800&auto=format&fit=crop" alt="Cafe & Lounge">
+                </div>
+                <div class="p-6 flex-1 flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-purple-500/15 text-purple-400 flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-mug-hot"></i>
+                        </div>
+                        <h4 class="font-display text-lg font-bold">Cafe & Lounge</h4>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Groovy set Afrobeat dan RNB untuk suasana santai namun tetap hidup.</p>
+                </div>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="180" class="card group flex flex-col overflow-hidden">
+                <div class="service-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop" alt="Private Parties">
+                </div>
+                <div class="p-6 flex-1 flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-Z-orange/15 text-Z-orange flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-champagne-glasses"></i>
+                        </div>
+                        <h4 class="font-display text-lg font-bold">Private Parties</h4>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Custom setlist untuk ulang tahun, gathering, atau acara komunitas eksklusif.</p>
+                </div>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="240" class="card group flex flex-col overflow-hidden">
+                <div class="service-img-wrap">
+                    <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?q=80&w=800&auto=format&fit=crop" alt="Festival & Stage">
+                </div>
+                <div class="p-6 flex-1 flex flex-col">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 rounded-xl bg-green-500/15 text-green-400 flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-fire"></i>
+                        </div>
+                        <h4 class="font-display text-lg font-bold">Festival & Stage</h4>
+                    </div>
+                    <p class="text-gray-500 text-sm leading-relaxed flex-1">Performa panggung besar dengan genre Indo Bounce yang eksplosif.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ━━━━━━━━━━━━━━ CONTACT ━━━━━━━━━━━━━━ -->
+<section id="contact" class="relative py-28 md:py-36 overflow-hidden">
+    <div class="mesh-bg"></div>
+    <div class="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
+
+        <!-- Main contact card -->
+        <div class="card !rounded-[32px] md:!rounded-[48px] overflow-hidden relative" style="border-color: rgba(0,212,255,0.15);">
+            <!-- Inner glow -->
+            <div class="absolute top-0 right-0 w-3/4 h-full pointer-events-none" style="background: radial-gradient(ellipse 80% 80% at 100% 0%, rgba(0,212,255,0.06) 0%, transparent 70%);"></div>
+            <div class="absolute bottom-0 left-0 w-1/2 h-1/2 pointer-events-none" style="background: radial-gradient(ellipse 80% 80% at 0% 100%, rgba(255,106,0,0.04) 0%, transparent 70%);"></div>
+
+            <div class="relative z-10 p-8 md:p-12 xl:p-16 grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-center">
+
+                <!-- Left: CTA -->
+                <div data-aos="fade-right">
+                    <span class="section-label">Booking</span>
+                    <h2 class="font-display text-5xl md:text-6xl xl:text-7xl font-extrabold mb-6 leading-tight">
+                        Siap <span class="neon-blue">Berkolaborasi</span>?
+                    </h2>
+                    <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                        Kunci tanggal acara Anda sekarang. Mari kita ciptakan pengalaman bermusik yang tidak terlupakan untuk audiens Anda di Gorontalo.
+                    </p>
+
+                    <div class="flex flex-col gap-4">
+                        <a href="https://wa.me/6285121337002" target="_blank" class="btn-wa w-max">
+                            <i class="fa-brands fa-whatsapp text-2xl"></i> Chat via WhatsApp
+                        </a>
+
+                        <div class="flex items-center gap-3 ml-2 text-gray-400">
+                            <div class="w-9 h-9 rounded-xl bg-Z-blue/10 flex items-center justify-center flex-shrink-0">
+                                <i class="fa-solid fa-phone text-Z-blue text-sm"></i>
+                            </div>
+                            <span class="font-mono text-lg text-white tracking-wide">0851-2133-7002</span>
+                        </div>
+                    </div>
+
+                    <!-- Info chips -->
+                    <div class="mt-10 flex flex-wrap gap-3">
+                        <div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.03] border border-Z-border text-sm text-gray-400">
+                            <i class="fa-solid fa-location-dot text-Z-blue text-xs"></i> Gorontalo & sekitarnya
+                        </div>
+                        <div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/[0.03] border border-Z-border text-sm text-gray-400">
+                            <i class="fa-solid fa-clock text-Z-blue text-xs"></i> Respon cepat
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Photo -->
+                <div data-aos="fade-left" class="flex justify-center lg:justify-end">
+                    <div class="contact-photo w-60 md:w-72 xl:w-80 aspect-[3/4] shadow-2xl"
+                         style="box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,212,255,0.15);">
+                        <img src="asset/img/14.png"
+                             alt="DJ Zhulfy"
+                             class="w-full h-full object-cover object-top transition-all duration-700 grayscale hover:grayscale-0 hover:scale-105">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ━━━━━━━━━━━━━━ FOOTER ━━━━━━━━━━━━━━ -->
+<footer class="border-t border-Z-border py-14" style="background: #030305;">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+        <div class="flex flex-col items-center gap-8">
+
+            <img src="asset/img/logo.png" alt="DJ Zhulfy"
+                 class="h-14 md:h-16 w-auto object-contain footer-logo-glow">
+
+            <div class="flex items-center gap-3">
+                <a href="#" class="social-btn" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="#" class="social-btn" aria-label="TikTok">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+                <a href="#" class="social-btn" aria-label="SoundCloud">
+                    <i class="fa-brands fa-soundcloud"></i>
+                </a>
+                <a href="https://wa.me/6285121337002" target="_blank" class="social-btn" aria-label="WhatsApp" style="color: #25D366;">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+
+            <nav class="flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm text-gray-500">
+                <a href="#home" class="hover:text-white transition-colors">Home</a>
+                <a href="#about" class="hover:text-white transition-colors">Tentang</a>
+                <a href="#music" class="hover:text-white transition-colors">Musik</a>
+                <a href="#experience" class="hover:text-white transition-colors">Pengalaman</a>
+                <a href="#services" class="hover:text-white transition-colors">Layanan</a>
+                <a href="#contact" class="hover:text-white transition-colors">Booking</a>
+            </nav>
+
+            <div class="text-center text-gray-600 text-sm">
+                <p>&copy; 2026 DJ Zhulfy. All Rights Reserved.</p>
+                <p class="mt-1">Based in Gorontalo, Indonesia.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- ━━━━━━━━━━━━━━ JS ━━━━━━━━━━━━━━ -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    // AOS
+    AOS.init({ once: true, offset: 80, duration: 700, easing: 'ease-out-cubic' });
+
+    // Mobile menu
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    let isOpen = false;
+
+    menuBtn.addEventListener('click', () => {
+        isOpen = !isOpen;
+        mobileMenu.classList.toggle('hidden', !isOpen);
+        menuIcon.className = isOpen ? 'fa-solid fa-xmark text-lg' : 'fa-solid fa-bars text-lg';
+    });
+
+    document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+            isOpen = false;
+            mobileMenu.classList.add('hidden');
+            menuIcon.className = 'fa-solid fa-bars text-lg';
+        });
+    });
+
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 60) {
+            navbar.classList.remove('glass-nav');
+            navbar.style.background = 'rgba(6, 6, 8, 0.95)';
+            navbar.style.borderBottomColor = 'rgba(255,255,255,0.06)';
+        } else {
+            navbar.classList.add('glass-nav');
+            navbar.style.background = '';
+            navbar.style.borderBottomColor = '';
+        }
+    }, { passive: true });
+
+    // Active nav link highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                navLinks.forEach(l => l.classList.remove('text-white', '!text-white'));
+                const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+                if (active) active.classList.add('!text-white');
+            }
+        });
+    }, { threshold: 0.4 });
+
+    sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
